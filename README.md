@@ -1,4 +1,5 @@
 # SunEditor
+
 Vanilla javascript based WYSIWYG web editor, with no dependencies.
 SunEditor supports IE11 and all modern browsers with no dependencies and polyfill.
 
@@ -13,6 +14,7 @@ SunEditor supports IE11 and all modern browsers with no dependencies and polyfil
 ![npm bundle size (minified + gzip)](https://img.shields.io/bundlephobia/minzip/suneditor.svg?style=flat-square)
 
 > The Suneditor is a lightweight, flexible, customizable WYSIWYG text editor for your web applications.
+>
 > - Pasting from Microsoft Word and Excel.
 > - Custom table selection, merge and split.
 > - Media embed, images upload.
@@ -22,81 +24,99 @@ SunEditor supports IE11 and all modern browsers with no dependencies and polyfil
 ![WYSIWYG HTML Editor](http://suneditor.com/docs/screen-main-w.png?v=2700)
 
 ## Table of contents
-- [Browser Support](#browser-support)
-- [Install](#install)
-- [Getting Started](#getting-started)
-- [When inserting custom tags in the editor](#when-inserting-custom-tags-in-the-editor)
-- [Use import statement](#use-import-statement)
-    - [Load only what you want](#1-load-only-what-you-want)
-    - [Load all plugins](#2-load-all-plugins)
-    - [Plugins can be used directly in the button list](#3-plugins-can-be-used-directly-in-the-button-list)
-- [Init function](#init-function)
-- [Use CodeMirror](#use-codemirror)
-- [Use KaTeX (math plugin)](#use-katex-math-plugin)
-- [Options](#options)
-- [Functions](#functions)
-- [Plugins list](#plugins-list)
-- [Examples](#examples)
-- [Options template](#options-template)
-- [Custom plugins](#custom-plugins)
-- [Document](#document)
-- [Other libraries using SunEditor](#other-libraries-using-sunEditor)
-    - [suneditor-react](#lib-suneditor-react)
-    - [angular-suneditor](#lib-angular-suneditor)
-    - [Using SunEditor with Livewire & Alpine.JS](#lib-livewire-alpine)
-    - [Plugin for Pluxml](#lib-pluxml)
-    - [AEM-SunEditor](#lib-aem-suneditor)
-- [License](#license)
 
+- [SunEditor](#suneditor) - [Demo : suneditor.com](#demo--suneditorcom)
+  - [Table of contents](#table-of-contents)
+    - [Browser Support](#browser-support)
+  - [Install](#install)
+    - [Npm](#npm)
+    - [Bower](#bower)
+    - [CDN](#cdn)
+  - [Getting Started](#getting-started)
+    - [1. Target Element](#1-target-element)
+    - [2. Create](#2-create)
+    - [3. Contents display](#3-contents-display)
+  - [When inserting custom tags in the editor](#when-inserting-custom-tags-in-the-editor)
+  - [Use import statement](#use-import-statement)
+    - [1. Load only what you want](#1-load-only-what-you-want)
+    - [2. Load all plugins](#2-load-all-plugins)
+    - [3. Plugins can be used directly in the button list](#3-plugins-can-be-used-directly-in-the-button-list)
+  - [Init function](#init-function)
+  - [Use CodeMirror](#use-codemirror)
+  - [Use KaTeX (math plugin)](#use-katex-math-plugin)
+  - [Options](#options)
+  - [Functions](#functions)
+  - [Plugins list](#plugins-list)
+  - [Examples](#examples)
+  - [Options template](#options-template)
+  - [Custom plugins](#custom-plugins)
+  - [Document](#document)
+  - [Other libraries using SunEditor](#other-libraries-using-suneditor)
+  - [License](#license)
 
 #### Browser Support
 
 | <img src="http://suneditor.com/docs/chrome-64.png" alt="Chrome" width="16px" height="16px" /> Chrome | <img src="http://suneditor.com/docs/mozilla-64.png" alt="Firefox" width="16px" height="16px" /> Firefox | <img src="http://suneditor.com/docs/opera-64.png" alt="Opera" width="16px" height="16px" /> Opera | <img src="http://suneditor.com/docs/safari-64.png" alt="Safari" width="16px" height="16px" /> Safari | <img src="http://suneditor.com/docs/edge-64.png" alt="Edge" width="16px" height="16px" /> Edge | <img src="http://suneditor.com/docs/explorer-64.png" alt="Explorer" width="16px" height="16px" /> Internet Explorer |
-|:---:|:---:|:---:|:---:|:---:|:---:|
-| Yes | Yes | Yes | Yes | Yes | 11+ |
+| :--------------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------------: | :--------------------------------------------------------------------------------------------------: | :--------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------------------------------: |
+|                                                 Yes                                                  |                                                   Yes                                                   |                                                Yes                                                |                                                 Yes                                                  |                                              Yes                                               |                                                         11+                                                         |
 
 ## Install
+
 #### Npm
-``` sh
-$ npm install suneditor --save
+
+```sh
+$ npm install suneditor-fixed --save
 ```
+
 #### Bower
-``` sh
-$ bower install suneditor --save
+
+```sh
+$ bower install suneditor-fixed --save
 ```
+
 #### CDN
-``` html
-<link href="https://cdn.jsdelivr.net/npm/suneditor@latest/dist/css/suneditor.min.css" rel="stylesheet">
+
+```html
+<link
+  href="https://cdn.jsdelivr.net/npm/suneditor@latest/dist/css/suneditor.min.css"
+  rel="stylesheet" />
 <!-- <link href="https://cdn.jsdelivr.net/npm/suneditor@latest/assets/css/suneditor.css" rel="stylesheet"> -->
 <!-- <link href="https://cdn.jsdelivr.net/npm/suneditor@latest/assets/css/suneditor-contents.css" rel="stylesheet"> -->
 <script src="https://cdn.jsdelivr.net/npm/suneditor@latest/dist/suneditor.min.js"></script>
 <!-- languages (Basic Language: English/en) -->
 <script src="https://cdn.jsdelivr.net/npm/suneditor@latest/src/lang/ko.js"></script>
 ```
+
 [jsdelivr/suneditor](https://www.jsdelivr.com/package/npm/suneditor)
 
 ## Getting Started
+
+how to use suneditor ? to answer "import suneditor-fixed" cdn is not support
+
 ### 1. Target Element
+
 ```html
 <textarea id="sample">Hi</textarea>
 ```
 
 ### 2. Create
+
 ```javascript
 /**
-* ID : 'suneditor_sample'
-* ClassName : 'sun-eidtor'
-*/
+ * ID : 'suneditor_sample'
+ * ClassName : 'sun-eidtor'
+ */
 // ID or DOM object
-const editor = SUNEDITOR.create((document.getElementById('sample') || 'sample'),{
-    // All of the plugins are loaded in the "window.SUNEDITOR" object in dist/suneditor.min.js file
-    // Insert options
-    // Language global object (default: en)
-    lang: SUNEDITOR_LANG['ko']
+const editor = SUNEDITOR.create(document.getElementById("sample") || "sample", {
+  // All of the plugins are loaded in the "window.SUNEDITOR" object in dist/suneditor.min.js file
+  // Insert options
+  // Language global object (default: en)
+  lang: SUNEDITOR_LANG["ko"],
 });
 ```
 
 ### 3. Contents display
+
 ```java
 When you display a document created by suneditor
 You need to include "src/assets/css/suneditor-contents.css" or "dist/css/suneditor.min.css" file.
@@ -106,6 +126,7 @@ In "suneditor-contents.css", you can define the style of all the tags created in
 ```
 
 ## When inserting custom tags in the editor
+
 ```text
 - Empty tags without meaning or tags that do not fit the editor's format are modified or deleted.
     Tags with the class name "se-component" or "__se__tag" of the top-level tag will not be deleted.
@@ -116,149 +137,186 @@ In "suneditor-contents.css", you can define the style of all the tags created in
 ## Use import statement
 
 ### 1. Load only what you want
+
 ```javascript
-import 'suneditor/dist/css/suneditor.min.css'
+import "suneditor-fixed/dist/css/suneditor.min.css";
 // import 'suneditor/assets/css/suneditor.css'
 // import 'suneditor/assets/css/suneditor-contents.css'
-import suneditor from 'suneditor'
+import suneditor from "suneditor-fixed";
 
 // How to import plugins
-import image from 'suneditor/src/plugins/dialog/link'
-import list from 'suneditor/src/plugins/submenu/list'
-import {font, video} from 'suneditor/src/plugins'
+import image from "suneditor-fixed/src/plugins/dialog/link";
+import list from "suneditor-fixed/src/plugins/submenu/list";
+import { font, video } from "suneditor-fixed/src/plugins";
 
 // How to import language files (default: en)
-import lang from 'suneditor/src/lang'
-import {ko} from 'suneditor/src/lang'
-import de from 'suneditor/src/lang/de'
+import lang from "suneditor-fixed/src/lang";
+import { ko } from "suneditor-fixed/src/lang";
+import de from "suneditor-fixed/src/lang/de";
 
-suneditor.create('sample', {
-    plugins: [font, video, image, list],
-    buttonList: [
-        ['font', 'video', 'image', 'list']
-    ],
-    lang: lang.ko
+suneditor.create("sample", {
+  plugins: [font, video, image, list],
+  buttonList: [["font", "video", "image", "list"]],
+  lang: lang.ko,
 });
 ```
 
 ### 2. Load all plugins
-```javascript
-import 'suneditor/dist/css/suneditor.min.css'
-import suneditor from 'suneditor'
-import plugins from 'suneditor/src/plugins'
 
-suneditor.create('sample', {
-    plugins: plugins,
-    buttonList: [
-        ['undo', 'redo'],
-        ['font', 'fontSize', 'formatBlock'],
-        ['paragraphStyle', 'blockquote'],
-        ['bold', 'underline', 'italic', 'strike', 'subscript', 'superscript'],
-        ['fontColor', 'hiliteColor', 'textStyle'],
-        ['removeFormat'],
-        '/', // Line break
-        ['outdent', 'indent'],
-        ['align', 'horizontalRule', 'list', 'lineHeight'],
-        ['table', 'link', 'image', 'video', 'audio' /** ,'math' */], // You must add the 'katex' library at options to use the 'math' plugin.
-        /** ['imageGallery'] */ // You must add the "imageGalleryUrl".
-        ['fullScreen', 'showBlocks', 'codeView'],
-        ['preview', 'print'],
-        ['save', 'template'],
-        /** ['dir', 'dir_ltr', 'dir_rtl'] */ // "dir": Toggle text direction, "dir_ltr": Right to Left, "dir_rtl": Left to Right
-    ]
-})
+```javascript
+import "suneditor-fixed/dist/css/suneditor.min.css";
+import suneditor from "suneditor-fixed";
+import plugins from "suneditor-fixed/src/plugins";
+
+suneditor.create("sample", {
+  plugins: plugins,
+  buttonList: [
+    ["undo", "redo"],
+    ["font", "fontSize", "formatBlock"],
+    ["paragraphStyle", "blockquote"],
+    ["bold", "underline", "italic", "strike", "subscript", "superscript"],
+    ["fontColor", "hiliteColor", "textStyle"],
+    ["removeFormat"],
+    "/", // Line break
+    ["outdent", "indent"],
+    ["align", "horizontalRule", "list", "lineHeight"],
+    ["table", "link", "image", "video", "audio" /** ,'math' */], // You must add the 'katex' library at options to use the 'math' plugin.
+    /** ['imageGallery'] */ // You must add the "imageGalleryUrl".
+    ["fullScreen", "showBlocks", "codeView"],
+    ["preview", "print"],
+    ["save", "template"],
+    /** ['dir', 'dir_ltr', 'dir_rtl'] */ // "dir": Toggle text direction, "dir_ltr": Right to Left, "dir_rtl": Left to Right
+  ],
+});
 
 // You can also load what you want
-suneditor.create('sample', {
-    plugins: [plugins.font],
-    // Plugins can be used directly in the button list
-    buttonList: [
-        ['font', plugins.image]
-    ]
-})
+suneditor.create("sample", {
+  plugins: [plugins.font],
+  // Plugins can be used directly in the button list
+  buttonList: [["font", plugins.image]],
+});
 ```
 
 ### 3. Plugins can be used directly in the button list
-```javascript
-import 'suneditor/dist/css/suneditor.min.css'
-import suneditor from 'suneditor'
-import {align, font, fontSize, fontColor, hiliteColor, 
-        horizontalRule, image, template} from 'suneditor/src/plugins'
 
-suneditor.create('sample', {
-    buttonList: [
-        ['undo', 'redo', 'removeFormat'],
-        [align, font, fontSize, fontColor, hiliteColor],
-        [horizontalRule, image, template]
-    ],
-})
+```javascript
+import "suneditor-fixed/dist/css/suneditor.min.css";
+import suneditor from "suneditor-fixed";
+import {
+  align,
+  font,
+  fontSize,
+  fontColor,
+  hiliteColor,
+  horizontalRule,
+  image,
+  template,
+} from "suneditor-fixed/src/plugins";
+
+suneditor.create("sample", {
+  buttonList: [
+    ["undo", "redo", "removeFormat"],
+    [align, font, fontSize, fontColor, hiliteColor],
+    [horizontalRule, image, template],
+  ],
+});
 ```
 
 ## Init function
+
 ```text
 The init function can be used by predefining options and calling the create function on the returned object.
 The value of the option argument put in the "create" function call takes precedence
 ```
+
 ```javascript
-import 'suneditor/dist/css/suneditor.min.css'
-import suneditor from 'suneditor'
-import plugins from 'suneditor/src/plugins'
+import "suneditor-fixed/dist/css/suneditor.min.css";
+import suneditor from "suneditor-fixed";
+import plugins from "suneditor-fixed/src/plugins";
 
 // all plugins
 const initEditor = suneditor.init({
-    plugins: plugins,
-    height: 200,
-    buttonList: [
-        [
-        'undo', 'redo',
-        'font', 'fontSize', 'formatBlock',
-        'paragraphStyle', 'blockquote',
-        'bold', 'underline', 'italic', 'strike', 'subscript', 'superscript',
-        'fontColor', 'hiliteColor', 'textStyle',
-        'removeFormat',
-        'outdent', 'indent',
-        'align', 'horizontalRule', 'list', 'lineHeight',
-        'table', 'link', 'image', 'video', 'audio', /** 'math', */ // You must add the 'katex' library at options to use the 'math' plugin.
-        /** 'imageGallery', */ // You must add the "imageGalleryUrl".
-        'fullScreen', 'showBlocks', 'codeView',
-        'preview', 'print', 'save', 'template',
-        /** 'dir', 'dir_ltr', 'dir_rtl' */ // "dir": Toggle text direction, "dir_ltr": Right to Left, "dir_rtl": Left to Right
-        ]
-    ]
+  plugins: plugins,
+  height: 200,
+  buttonList: [
+    [
+      "undo",
+      "redo",
+      "font",
+      "fontSize",
+      "formatBlock",
+      "paragraphStyle",
+      "blockquote",
+      "bold",
+      "underline",
+      "italic",
+      "strike",
+      "subscript",
+      "superscript",
+      "fontColor",
+      "hiliteColor",
+      "textStyle",
+      "removeFormat",
+      "outdent",
+      "indent",
+      "align",
+      "horizontalRule",
+      "list",
+      "lineHeight",
+      "table",
+      "link",
+      "image",
+      "video",
+      "audio" /** 'math', */, // You must add the 'katex' library at options to use the 'math' plugin.
+      /** 'imageGallery', */ // You must add the "imageGalleryUrl".
+      "fullScreen",
+      "showBlocks",
+      "codeView",
+      "preview",
+      "print",
+      "save",
+      "template",
+      /** 'dir', 'dir_ltr', 'dir_rtl' */ // "dir": Toggle text direction, "dir_ltr": Right to Left, "dir_rtl": Left to Right
+    ],
+  ],
 });
 
-initEditor.create('sample_1', {
-    // The value of the option argument put in the "create" function call takes precedence
+initEditor.create("sample_1", {
+  // The value of the option argument put in the "create" function call takes precedence
 });
 
-initEditor.create('sample_2', {
-    // The value of the option argument put in the "create" function call takes precedence
-    height: 'auto',
-    buttonList: [
-        ['bold', 'underline', 'italic'],
-        ['removeFormat'],
-        ['preview', 'print']
-    ]
+initEditor.create("sample_2", {
+  // The value of the option argument put in the "create" function call takes precedence
+  height: "auto",
+  buttonList: [
+    ["bold", "underline", "italic"],
+    ["removeFormat"],
+    ["preview", "print"],
+  ],
 });
 ```
 
 ## Use CodeMirror
+
 ```html
 <!-- https://github.com/codemirror/CodeMirror -->
 <!-- codeMirror (^5.0.0) -->
 <!-- Use version 5.x.x -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/codemirror@5.49.0/lib/codemirror.min.css">
+<link
+  rel="stylesheet"
+  href="https://cdn.jsdelivr.net/npm/codemirror@5.49.0/lib/codemirror.min.css" />
 <script src="https://cdn.jsdelivr.net/npm/codemirror@5.49.0/lib/codemirror.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/codemirror@5.49.0/mode/htmlmixed/htmlmixed.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/codemirror@5.49.0/mode/xml/xml.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/codemirror@5.49.0/mode/css/css.js"></script>
 ```
+
 ```javascript
-import 'suneditor/dist/css/suneditor.min.css'
-import suneditor from 'suneditor'
+import 'suneditor-fixed/dist/css/suneditor.min.css'
+import suneditor from 'suneditor-fixed'
 // Import codeMirror
 import CodeMirror from 'codemirror'
-import 'codemirror/mode/htmlmixed/htmlmixed'
+import 'suneditor-fixed/mode/htmlmixed/htmlmixed'
 import 'codemirror/lib/codemirror.css'
 
 suneditor.create('sample', {
@@ -276,15 +334,19 @@ suneditor.create('sample', {
 ```
 
 ## Use KaTeX (math plugin)
+
 ```html
 <!-- https://github.com/KaTeX/KaTeX -->
 <!-- KaTeX (^0.11.1) -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.css">
+<link
+  rel="stylesheet"
+  href="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.css" />
 <script src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.js"></script>
 ```
+
 ```javascript
-import 'suneditor/dist/css/suneditor.min.css'
-import suneditor from 'suneditor'
+import 'suneditor-fixed/dist/css/suneditor.min.css'
+import suneditor from 'suneditor-fixed'
 // Import katex
 import katex from 'katex'
 import 'katex/dist/katex.min.css'
@@ -354,6 +416,7 @@ let newMentions = editor.core.getMentions();
 ``` -->
 
 ## Options
+
 ```java
 plugins: [
     /** command */
@@ -385,7 +448,7 @@ plugins: [
     imageGallery
 ]
 : Plugins array.     default: null {Array}
-// * Custom options and default options are all treated the same. 
+// * Custom options and default options are all treated the same.
 // * When using a custom plugin and a default plugin together, register as follows.
 // * {custom_plugin, ...plugins}
 
@@ -443,7 +506,7 @@ lineAttrReset   : Deletes other attributes except for the property set at the ti
                   If there is no value, no all attribute is deleted.    default: '' {String}
                   ex) 'class|style': Attributes other than "class" and "style" are deleted at line break.
                       '*': All attributes are deleted at line break.
-toolbarWidth    : The width of the toolbar. Applies only when the editor mode is 
+toolbarWidth    : The width of the toolbar. Applies only when the editor mode is
                   'inline' or 'balloon' mode.     default: 'auto' {Number|String}
 toolbarContainer: A custom HTML selector placing the toolbar inside.
                   The class name of the element must be 'sun-editor'.
@@ -519,7 +582,7 @@ resizingBarContainer: A custom HTML selector placing the resizing bar inside.
                       ex) document.querySelector('#id') || '#id'
 
 // Character count-----------------------------------------------------------------------------------------------
-charCounter     : Shows the number of characters in the editor.     
+charCounter     : Shows the number of characters in the editor.
                   If the maxCharCount option has a value, it becomes true. default: false {Boolean}
 charCounterType : Defines the calculation method of the "charCounter" option.
                   'char': Characters length.
@@ -661,7 +724,7 @@ imageWidth      : The default width size of the image frame.          default: '
 imageHeight     : The default height size of the image frame.         default: 'auto' {String}
 imageSizeOnlyPercentage : If true, image size can only be scaled by percentage.   default: false {Boolean}
 imageRotation   : Choose whether to image rotation buttons display.
-                  When "imageSizeOnlyPercentage" is "true" or  or "imageHeightShow" is "false" the default value is false.                       
+                  When "imageSizeOnlyPercentage" is "true" or  or "imageHeightShow" is "false" the default value is false.
                   If you want the button to be visible, put it a true.     default: true {Boolean}
 imageFileInput  : Choose whether to create a file input tag in the image upload window.  default: true {Boolean}
 imageUrlInput   : Choose whether to create a image url input tag in the image upload window.
@@ -705,7 +768,7 @@ imageGalleryUrl     : The url of the image gallery, if you use the image gallery
                                 }
                             ],
                             "nullMessage": "Text string or HTML string", // It is displayed when "result" is empty.
-                            "errorMessage": "Insert error message", // It is displayed when an error occurs. 
+                            "errorMessage": "Insert error message", // It is displayed when an error occurs.
                         }
                       You can redefine the "plugins.imageGallery.drawItems" method.
 imageGalleryHeader: Http Header when get image gallery.         default: null {Object}
@@ -761,7 +824,7 @@ videoUploadUrl  : The video upload to server mapping address.       default: nul
 videoUploadSizeLimit: The size of the total uploadable videos (in bytes).
                       Invokes the "onVideoUploadError" method.  default: null {Number}
 videoMultipleFile: If true, multiple videos can be selected.    default: false {Boolean}
-videoTagAttrs    : Define "Attributes" of the video tag.                      default: null {Object} 
+videoTagAttrs    : Define "Attributes" of the video tag.                      default: null {Object}
                    ex) { poster: "http://suneditor.com/docs/loading.gif", autoplay: true }
 videoIframeAttrs : Define "Attributes" of the iframe tag. (Youtube, Vimeo).   default: null {Object}
                    ex) { style: "border: 2px solid red;" }
@@ -795,7 +858,7 @@ audioUploadUrl  : The audio upload to server mapping address.       default: nul
 audioUploadSizeLimit: The size of the total uploadable audios (in bytes).
                       Invokes the "onAudioUploadError" method.  default: null {Number}
 audioMultipleFile: If true, multiple audios can be selected.    default: false {Boolean}
-audioTagAttrs    : Define "Attributes" of the audio tag.        default: null {Object} 
+audioTagAttrs    : Define "Attributes" of the audio tag.        default: null {Object}
                    ex) { controlslist: "nodownload", autoplay: true }
 videoAccept      : Define the "accept" attribute of the input.  default: "*" {String}
                    ex) "*" or ".mp3, .wav .."
@@ -826,10 +889,10 @@ linkRel         : Defines "rel" attribute list of anchor tag.   default: [] {Arr
 linkRelDefault  : Defines default "rel" attributes of anchor tag.   default: {} {Object}
                   ex) linkRelDefault: {
                         default: 'nofollow', // Default rel
-                        check_new_window: 'noreferrer noopener', // When "open new window" is checked 
-                        check_bookmark: 'bookmark' // When "bookmark" is checked 
+                        check_new_window: 'noreferrer noopener', // When "open new window" is checked
+                        check_bookmark: 'bookmark' // When "bookmark" is checked
                     },
-                    // If properties other than "default" start with "only:", the existing "rel" is cleared and applied. 
+                    // If properties other than "default" start with "only:", the existing "rel" is cleared and applied.
                     linkRelDefault: {
                         check_new_window: 'only:noreferrer noopener'
                     }
@@ -853,12 +916,12 @@ shortcutsDisable: You can disable shortcuts.    default: [] {Array}
 shortcutsHint   : If false, hide the shortcuts hint.    default: true {Boolean}
 
 // Defining save button-------------------------------------------------------------------------------------------
-callBackSave    : Callback functions that is called when the Save button is clicked. 
+callBackSave    : Callback functions that is called when the Save button is clicked.
                   Arguments - (contents, isChanged).                            default: functions.save {Function}
 
 // Templates Array------------------------------------------------------------------------------------------------
 templates       : If you use a template plugin, add it.
-                  Defines a list of templates.                       default: null {Array} 
+                  Defines a list of templates.                       default: null {Array}
                   ex) [
                     {
                         name: 'Template-1',
@@ -942,7 +1005,7 @@ buttonList      : Defines button list to array {Array}
                     [':v-View-text.View', 'fullScreen', 'codeView', 'print'],
                     ['-right', ':o-More Others-<i class="xxx"></i>', 'save', 'template'], // Used with alignment
                   ]
-                  
+
 ----------------- ex) Responsive setting: -------------------------------------------------------------------------
                   // You can specify the arrangement of buttons according to the screen size in advance.
                   // Responsive settings start with a percent sign.("%").
@@ -987,10 +1050,11 @@ buttonList      : Defines button list to array {Array}
                         ['-right', ':i-More Misc-default.more_vertical', 'fullScreen', 'showBlocks', 'codeView', 'preview', 'print', 'save', 'template']
                     ]]
                   ]
-                  
+
 ```
 
 ## Functions
+
 ```javascript
 import suneditor from 'suneditor'
 
@@ -1048,7 +1112,7 @@ editor.getFullContents(onlyContents: Boolean);
 editor.getText();
 
 // Gets a list of images uploaded to the editor
-/** 
+/**
  * {
  *  element: image element
  *  src: imgage src
@@ -1064,7 +1128,7 @@ editor.getImagesInfo();
 // Gets uploaded files(plugin using fileManager) information list.
 // image: [img], video: [video, iframe], audio: [audio]
 // When the argument value is 'image', it is the same function as "getImagesInfo".
-/** 
+/**
  * {
  *  element: image element
  *  src: imgage src
@@ -1114,7 +1178,7 @@ editor.hide();
 
 // Show the suneditor
 editor.show();
-    
+
 // Destroy the suneditor
 editor.destroy();
 
@@ -1212,7 +1276,7 @@ editor.onDrop = function (e, cleanData, maxCharCount, core) { console.log('onDro
 /**
  * contents Editor content
  * core: Core object
- */   
+ */
 editor.onSave = function (contents, core) {console.log(contents) };
 
 // Called before the image is uploaded
@@ -1252,7 +1316,7 @@ editor.onImageUploadBefore: function (files, info, core, uploadHandler) {
 // If false is returned, no video(iframe, video) upload is performed.
 // If new fileList are returned,  replaced the previous fileList
 // If undefined is returned, it waits until "uploadHandler" is executed.
-/** 
+/**
  * files: Files array
  * info: {
  * - inputWidth: Value of width input
@@ -1282,7 +1346,7 @@ editor.onVideoUploadBefore: function (files, info, core, uploadHandler) {
 // If false is returned, no audio upload is performed.
 // If new fileList are returned,  replaced the previous fileList
 // If undefined is returned, it waits until "uploadHandler" is executed.
-/** 
+/**
  * files: Files array
  * info: {
  * - isUpdate: Update audio if true, create audio if false
@@ -1368,13 +1432,13 @@ editor.onAudioUploadError = function (errorMessage, result, core) {
 // height, prevHeight are number
 editor.onResizeEditor = function (height, prevHeight, core, resizeObserverEntry) {
     console.log(`height: ${height}, prevHeight: ${prevHeight}`, resizeObserverEntry)
-    // "resizeObserverEntry" is not provided in IE Browser. 
+    // "resizeObserverEntry" is not provided in IE Browser.
 }
 
 // Called after the "setToolbarButtons" invocation
 // Can be used to tweak buttons properties (useful for custom buttons)
 /**
- * buttonList: buttonList array 
+ * buttonList: buttonList array
  * core: Core object
  */
 editor.onSetToolbarButtons = function (buttonList, core) {
@@ -1485,6 +1549,7 @@ editor.showController = function (name, controllers, core) {
 ```
 
 ## Plugins list
+
 > The plugin and the button have the same name.
 
 <table>
@@ -1563,18 +1628,23 @@ editor.showController = function (name, controllers, core) {
 </table>
 
 ## Examples
+
 [Examples](http://suneditor.com/sample/html/examples.html)
 
 ## Options template
+
 [Options template](http://suneditor.com/sample/html/options.html)
 
 ## Custom plugins
+
 [Custom plugins](http://suneditor.com/sample/html/customPlugins.html)
 
 ## Document
+
 [Document](http://suneditor.com/sample/html/document.html)
 
 ## Other libraries using SunEditor
+
 <a id="lib-suneditor-react"></a>[suneditor-react](https://github.com/mkhstar/suneditor-react) ([@mkhstar](https://github.com/mkhstar)) - Pure React Component for SunEditor.
 
 <a id="lib-angular-suneditor"></a>[angular-suneditor](https://github.com/BauViso/angular-suneditor) ([@BauViso](https://github.com/BauViso)) - Angular module for the SunEditor WYSIWYG Editor.
@@ -1584,6 +1654,7 @@ editor.showController = function (name, controllers, core) {
 <a id="lib-pluxml"></a>[Plugin for Pluxml](https://forum.pluxml.org/discussion/comment/59339) ([@sudwebdesign](https://github.com/sudwebdesign)) - Plugin for Pluxml.
 
 <a id="lib-aem-suneditor"></a>[AEM-SunEditor](https://blogs.perficientdigital.com/2019/08/13/suneditor-an-alternative-to-the-aem-rte) ([@ahmed-musallam](https://github.com/ahmed-musallam/AEM-SunEditor)) - Enables using SunEditor in AEM dialogs as an RTE replacement.
-    
+
 ## License
+
 Suneditor may be freely distributed under the MIT license.
